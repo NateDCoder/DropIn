@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Object Placer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="menu">
+        <h2>Object Menu</h2>
+        <label for="shape">Shape:</label>
+        <select id="shape">
+            <option value="box">Cube</option>
+            <option value="sphere">Sphere</option>
+            <option value="cylinder">Cylinder</option>
+            <option value="cone">Cone</option>
+        </select><br><br>
+
+        <label for="size">Size:</label>
+        <input type="range" id="size" min="10" max="200" value="50"><br><br>
+
+        <label for="color">Color:</label>
+        <input type="color" id="color" value="#ff0000"><br><br>
+
+        <button id="addObject">Add Object</button>
+        <button id="clearObjects">Clear All</button>
+        <br><br>
+        <label for="selectObject">Select Object:</label>
+        <select id="selectObject">
+            <option value="-1">None</option>
+        </select>
+    </div>
+    <div id="editMenu" style="display:none;">
+        <h3>Edit Selected Object</h3>
+        <label for="editX">X:</label>
+        <input type="number" id="editX" step="10"><br>
+        <label for="editY">Y:</label>
+        <input type="number" id="editY" step="10"><br>
+        <label for="editZ">Z:</label>
+        <input type="number" id="editZ" step="10"><br>
+        <label for="editRX">Rot X (°):</label>
+        <input type="number" id="editRX" step="5"><br>
+        <label for="editRY">Rot Y (°):</label>
+        <input type="number" id="editRY" step="5"><br>
+        <label for="editRZ">Rot Z (°):</label>
+        <input type="number" id="editRZ" step="5"><br>
+        <label for="editColor">Color:</label>
+        <input type="color" id="editColor"><br>
+        <button id="applyEdit">Apply Changes</button>
+        <button id="deleteObject">Delete Object</button>
+    </div>
+    <div id="canvas-container"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
