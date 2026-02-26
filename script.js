@@ -26,13 +26,13 @@ function draw() {
         noStroke();
         fill(obj.color);
         if (obj.shape === 'box') {
-            box(obj.size);
+            box(obj.width, obj.height, obj.depth);
         } else if (obj.shape === 'sphere') {
-            sphere(obj.size / 2);
+            sphere(obj.radius);
         } else if (obj.shape === 'cylinder') {
-            cylinder(obj.size / 2, obj.size);
+            cylinder(obj.radius, obj.height);
         } else if (obj.shape === 'cone') {
-            cone(obj.size / 2, obj.size);
+            cone(obj.radius, obj.height);
         }
         pop();
     }
@@ -49,7 +49,6 @@ document.getElementById('addObject').addEventListener('click', function() {
     let color = document.getElementById('color').value;
     let obj = {
         shape: shape,
-        size: size,
         color: color,
         x: offsetX,
         y: 0,
@@ -58,6 +57,19 @@ document.getElementById('addObject').addEventListener('click', function() {
         ry: 0,
         rz: 0
     };
+    if (shape === 'box') {
+        obj.width = size;
+        obj.height = size;
+        obj.depth = size;
+    } else if (shape === 'sphere') {
+        obj.radius = size / 2;
+    } else if (shape === 'cylinder') {
+        obj.radius = size / 2;
+        obj.height = size;
+    } else if (shape === 'cone') {
+        obj.radius = size / 2;
+        obj.height = size;
+    }
     objects.push(obj);
     offsetX += 100; // Offset each new object
     selected = -1;
@@ -93,6 +105,11 @@ function updateEditMenu() {
     let editMenu = document.getElementById('editMenu');
     let select = document.getElementById('selectObject');
     select.value = selected;
+    // Hide all dimension divs
+    document.getElementById('boxDimensions').style.display = 'none';
+    document.getElementById('sphereDimensions').style.display = 'none';
+    document.getElementById('cylinderDimensions').style.display = 'none';
+    document.getElementById('coneDimensions').style.display = 'none';
     if (selected >= 0) {
         let obj = objects[selected];
         document.getElementById('editX').value = obj.x;
@@ -102,6 +119,23 @@ function updateEditMenu() {
         document.getElementById('editRY').value = obj.ry;
         document.getElementById('editRZ').value = obj.rz;
         document.getElementById('editColor').value = obj.color;
+        if (obj.shape === 'box') {
+            document.getElementById('boxDimensions').style.display = 'block';
+            document.getElementById('editWidth').value = obj.width;
+            document.getElementById('editHeightBox').value = obj.height;
+            document.getElementById('editDepth').value = obj.depth;
+        } else if (obj.shape === 'sphere') {
+            document.getElementById('sphereDimensions').style.display = 'block';
+            document.getElementById('editRadiusSphere').value = obj.radius;
+        } else if (obj.shape === 'cylinder') {
+            document.getElementById('cylinderDimensions').style.display = 'block';
+            document.getElementById('editRadiusCylinder').value = obj.radius;
+            document.getElementById('editHeightCylinder').value = obj.height;
+        } else if (obj.shape === 'cone') {
+            document.getElementById('coneDimensions').style.display = 'block';
+            document.getElementById('editRadiusCone').value = obj.radius;
+            document.getElementById('editHeightCone').value = obj.height;
+        }
         editMenu.style.display = 'block';
     } else {
         editMenu.style.display = 'none';
@@ -118,6 +152,19 @@ document.getElementById('applyEdit').addEventListener('click', function() {
         obj.ry = parseFloat(document.getElementById('editRY').value) || 0;
         obj.rz = parseFloat(document.getElementById('editRZ').value) || 0;
         obj.color = document.getElementById('editColor').value;
+        if (obj.shape === 'box') {
+            obj.width = parseFloat(document.getElementById('editWidth').value) || 10;
+            obj.height = parseFloat(document.getElementById('editHeightBox').value) || 10;
+            obj.depth = parseFloat(document.getElementById('editDepth').value) || 10;
+        } else if (obj.shape === 'sphere') {
+            obj.radius = parseFloat(document.getElementById('editRadiusSphere').value) || 10;
+        } else if (obj.shape === 'cylinder') {
+            obj.radius = parseFloat(document.getElementById('editRadiusCylinder').value) || 10;
+            obj.height = parseFloat(document.getElementById('editHeightCylinder').value) || 10;
+        } else if (obj.shape === 'cone') {
+            obj.radius = parseFloat(document.getElementById('editRadiusCone').value) || 10;
+            obj.height = parseFloat(document.getElementById('editHeightCone').value) || 10;
+        }
     }
 });
 
@@ -155,6 +202,48 @@ document.getElementById('editRZ').addEventListener('input', function() {
 document.getElementById('editColor').addEventListener('input', function() {
     if (selected >= 0) {
         objects[selected].color = this.value;
+    }
+});
+
+// Dimension live update listeners
+document.getElementById('editWidth').addEventListener('input', function() {
+    if (selected >= 0 && objects[selected].shape === 'box') {
+        objects[selected].width = parseFloat(this.value) || 10;
+    }
+});
+document.getElementById('editHeightBox').addEventListener('input', function() {
+    if (selected >= 0 && objects[selected].shape === 'box') {
+        objects[selected].height = parseFloat(this.value) || 10;
+    }
+});
+document.getElementById('editDepth').addEventListener('input', function() {
+    if (selected >= 0 && objects[selected].shape === 'box') {
+        objects[selected].depth = parseFloat(this.value) || 10;
+    }
+});
+document.getElementById('editRadiusSphere').addEventListener('input', function() {
+    if (selected >= 0 && objects[selected].shape === 'sphere') {
+        objects[selected].radius = parseFloat(this.value) || 10;
+    }
+});
+document.getElementById('editRadiusCylinder').addEventListener('input', function() {
+    if (selected >= 0 && objects[selected].shape === 'cylinder') {
+        objects[selected].radius = parseFloat(this.value) || 10;
+    }
+});
+document.getElementById('editHeightCylinder').addEventListener('input', function() {
+    if (selected >= 0 && objects[selected].shape === 'cylinder') {
+        objects[selected].height = parseFloat(this.value) || 10;
+    }
+});
+document.getElementById('editRadiusCone').addEventListener('input', function() {
+    if (selected >= 0 && objects[selected].shape === 'cone') {
+        objects[selected].radius = parseFloat(this.value) || 10;
+    }
+});
+document.getElementById('editHeightCone').addEventListener('input', function() {
+    if (selected >= 0 && objects[selected].shape === 'cone') {
+        objects[selected].height = parseFloat(this.value) || 10;
     }
 });
 
