@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D Object Placer</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div id="menu">
         <h2>Object Menu</h2>
@@ -23,6 +25,9 @@
         <label for="color">Color:</label>
         <input type="color" id="color" value="#ff0000"><br><br>
 
+        <label for="globalLight">Enable Light:</label>
+        <input type="checkbox" id="globalLight" checked><br><br>
+
         <button id="addObject">Add Object</button>
         <button id="clearObjects">Clear All</button>
         <br><br>
@@ -30,9 +35,14 @@
         <select id="selectObject">
             <option value="-1">None</option>
         </select>
+        <button id="saveProject">Download Project</button>
+        <button id="loadProject">Load Project</button>
+        <input type="file" id="fileLoader" accept=".json" style="display:none;">
     </div>
     <div id="editMenu" style="display:none;">
         <h3>Edit Selected Object</h3>
+        <label for="editName">Name:</label>
+        <input type="text" id="editName" placeholder="Object Name"><br>
         <label for="editX">X:</label>
         <input type="number" id="editX" step="10"><br>
         <label for="editY">Y:</label>
@@ -71,6 +81,10 @@
         </div>
         <label for="editColor">Color:</label>
         <input type="color" id="editColor"><br>
+        <label>Gravity:</label><br>
+        <input type="checkbox" id="gravityX"> X<br>
+        <input type="checkbox" id="gravityY"> Y<br>
+        <input type="checkbox" id="gravityZ"> Z<br>
         <button id="applyEdit">Apply Changes</button>
         <button id="deleteObject">Delete Object</button>
     </div>
@@ -79,4 +93,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>
